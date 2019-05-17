@@ -2,7 +2,7 @@
 
 Like map-reduce, but for branching logic. Like a switch statement, except it's an expression that returns a value. This little helper module allows you to construct a JavaScript expression that returns a value based on an enumerated list of possible values.
 
-This module was inspired by a conversation on [dev.to](https://dev.to/nebrius/a-new-coding-style-for-switch-statements-in-javascript-typescript-ipe/) with [Avalander](https://github.com/Avalander). Thank you Avalander!
+This module was inspired by a conversation on [dev.to](https://dev.to/nebrius/a-new-coding-style-for-switch-statements-in-javascript-typescript-ipe/) with [Avalander](https://github.com/Avalander) and [John Papa](https://github.com/johnpapa). Thanks you two!
 
 ## Installation
 
