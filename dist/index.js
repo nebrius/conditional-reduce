@@ -1,3 +1,5 @@
+"use strict";
+/*
 MIT License
 
 Copyright (c) Bryan Hughes <bryan@nebri.us>
@@ -19,3 +21,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+*/
+Object.defineProperty(exports, "__esModule", { value: true });
+function conditionalReduce(value, conditionals) {
+    if (!conditionals.hasOwnProperty(value)) {
+        throw new Error(`Invalid conditional value "${value}"`);
+    }
+    return conditionals[value]();
+}
+exports.conditionalReduce = conditionalReduce;
+//# sourceMappingURL=index.js.map
