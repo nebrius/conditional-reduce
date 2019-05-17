@@ -22,9 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-export function conditionalReduce<T>(value: string, conditionals: { [ value: string ]: () => T }): T {
+export function reduce<T>(value: string, conditionals: { [ value: string ]: () => T }): T {
   if (!conditionals.hasOwnProperty(value)) {
     throw new Error(`Invalid conditional value "${value}"`);
   }
   return conditionals[value]();
+}
+
+export function curry<T>(conditionals: { [ value: string ]: () => T }): (value: string) => T {
+  return (value: string) => reduce<T>(value, conditionals);
 }

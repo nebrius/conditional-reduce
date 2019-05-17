@@ -14,17 +14,19 @@ npm install conditional-reduce
 
 ## Usage
 
+### Direct usage
+
 In JavaScript:
 
 ```javascript
-const { conditionalReduce } = require('conditional-reduce');
+const { reduce } = require('conditional-reduce');
 
-console.log(conditionalReduce('dog', {
+console.log(reduce('dog', {
   dog: () => 'Dogs are great pets',
   cat: () => 'Cat\'s are also great'
 })); // Prints "Dogs are great pets"
 
-console.log(conditionalReduce('bird', {
+console.log(reduce('bird', {
   dog: () => 'Dogs are great pets',
   cat: () => 'Cat\'s are also great'
 })); // Throws 'Invalid conditional value "bird"' exception
@@ -33,17 +35,49 @@ console.log(conditionalReduce('bird', {
 In TypeScript:
 
 ```typescript
-import { conditionalReduce } from 'conditional-reduce';
+import { reduce } from 'conditional-reduce';
 
-console.log(conditionalReduce<string>('dog', { // generic enforces string return type on all branches
+console.log(reduce<string>('dog', { // generic enforces string return type on all branches
   dog: () => 'Dogs are great pets',
   cat: () => 'Cat\'s are also great'
 })); // Prints "Dogs are great pets"
 
-console.log(conditionalReduce<string>('bird', {
+console.log(reduce<string>('bird', {
   dog: () => 'Dogs are great pets',
   cat: () => 'Cat\'s are also great'
 })); // Throws 'Invalid conditional value "bird"' exception
+```
+
+### Curry'd usage
+
+If you want to reuse your conditional, you can [curry](https://en.wikipedia.org/wiki/Currying) them with the `curry` method.
+
+In JavaScript:
+
+```javascript
+const { curry } = require('conditional-reduce');
+
+const dogReducer = curry({
+  dog: () => 'Dogs are great pets',
+  cat: () => 'Cat\'s are also great'
+});
+
+console.log(dogReducer('dog')); // Prints "Dogs are great pets"
+console.log(dogReducer('bird')); // Throws 'Invalid conditional value "bird"' exception
+```
+
+In TypeScript:
+
+```typescript
+import { curry } from 'conditional-reduce';
+
+const dogReducer = curry<string>({
+  dog: () => 'Dogs are great pets',
+  cat: () => 'Cat\'s are also great'
+});
+
+console.log(dogReducer('dog')); // Prints "Dogs are great pets"
+console.log(dogReducer('bird')); // Throws 'Invalid conditional value "bird"' exception
 ```
 
 # License

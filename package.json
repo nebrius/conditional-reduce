@@ -1,6 +1,6 @@
 {
   "name": "conditional-reduce",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Construct a JavaScript expression that returns a value based on an enumerated list of possible values",
   "main": "dist/index.js",
   "types": "declarations/index.d.ts",

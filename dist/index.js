@@ -23,11 +23,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-function conditionalReduce(value, conditionals) {
+function reduce(value, conditionals) {
     if (!conditionals.hasOwnProperty(value)) {
         throw new Error(`Invalid conditional value "${value}"`);
     }
     return conditionals[value]();
 }
-exports.conditionalReduce = conditionalReduce;
+exports.reduce = reduce;
+function curry(conditionals) {
+    return (value) => reduce(value, conditionals);
+}
+exports.curry = curry;
 //# sourceMappingURL=index.js.map
