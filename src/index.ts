@@ -22,13 +22,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-export function reduce<T>(value: string, conditionals: { [ value: string ]: () => T }): T {
-  if (!conditionals.hasOwnProperty(value)) {
-    throw new Error(`Invalid conditional value "${value}"`);
-  }
-  return conditionals[value]();
+export interface IConditionalDictionary<T> {
+  [ key: string ]: () => T;
 }
 
-export function curry<T>(conditionals: { [ value: string ]: () => T }): (value: string) => T {
-  return (value: string) => reduce<T>(value, conditionals);
+export type DefaultCase<T> = (value: string) => T;
+
+// TODO: add a version that allows supplying a Map/WeakMap as well as a dictionary for values
+export function reduce<T>(value: string, conditionals: IConditionalDictionary<T>, defaultCase?: DefaultCase<T>): T {
+  const retVal = conditionals[value];
+  if (!retVal) {
+    if (defaultCase) {
+      return defaultCase(value);
+    } else {
+      throw new Error(`Invalid conditional value "${value}"`);
+    }
+  }
+  return retVal();
+}
+
+export function curry<T>(conditionals: IConditionalDictionary<T>, defaultCase?: DefaultCase<T>): (value: string) => T {
+  return (value: string) => reduce<T>(value, conditionals, defaultCase);
 }

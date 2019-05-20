@@ -23,15 +23,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-function reduce(value, conditionals) {
-    if (!conditionals.hasOwnProperty(value)) {
-        throw new Error(`Invalid conditional value "${value}"`);
+// TODO: add a version that allows supplying a Map/WeakMap as well as a dictionary for values
+function reduce(value, conditionals, defaultCase) {
+    const retVal = conditionals[value];
+    if (!retVal) {
+        if (defaultCase) {
+            return defaultCase(value);
+        }
+        else {
+            throw new Error(`Invalid conditional value "${value}"`);
+        }
     }
-    return conditionals[value]();
+    return retVal();
 }
 exports.reduce = reduce;
-function curry(conditionals) {
-    return (value) => reduce(value, conditionals);
+function curry(conditionals, defaultCase) {
+    return (value) => reduce(value, conditionals, defaultCase);
 }
 exports.curry = curry;
 //# sourceMappingURL=index.js.map
