@@ -108,17 +108,17 @@ console.log(reduce<string>('bird', { // generic enforces string return type on a
 
 ## API
 
-Note: the function definitions below use the [TypeScript](https://www.typescriptlang.org/) definitions for clarity. The types are _not_ enforced in pure JavaScript, so in theory you can mix and match, but honestly I never tested that scenario and have no idea what will happen.
+Note: the signatures below use the [TypeScript](https://www.typescriptlang.org/) definitions for clarity. The types are _not_ enforced in pure JavaScript, so in theory you can mix and match, but honestly I never tested that scenario and have no idea what will happen.
 
 If you're not familiar with TypeScript syntax, there are basically three things you need to know:
 
 1. A variables type is specified after the variable name, and separated by a `:`. For example, `x: number` means we have a variable named `x`, and it's a number.
 2. A `?` after the variable name and before the `:` means that the variable is optional
-3. A variable name or type followed by `<T>` means that it takes in a [generic type](https://www.typescriptlang.org/docs/handbook/generics.html) called `T`, i.e. a placeholder type that the caller fills in. `T` can be any type, but all references to `T` are of the _same_ type, whatever it may be. This type is supplied by the user when calling the function (see TypeSCript examples above).
+3. A variable name or type followed by `<T>` means that it takes in a [generic type](https://www.typescriptlang.org/docs/handbook/generics.html) called `T`, i.e. a placeholder type that the caller fills in. `T` can be any type, but all references to `T` are of the _same_ type, whatever it may be. This type is supplied by the user when calling the function (see TypeScript examples above).
 
-### IConditionalDictionary
+## Conditional Dictionaries
 
-Conditional dictionaries are at the core Conditional Reduce. These are analogous to the `case` statements in a `switch` statement. Here is the TypeScript definition of the dictionary
+**Signature:**
 
 ```typescript
 interface IConditionalDictionary<T> {
@@ -126,24 +126,51 @@ interface IConditionalDictionary<T> {
 }
 ```
 
+**Description:**
+
+Conditional dictionaries are at the core Conditional Reduce. These are analogous to the `case` statements in a `switch` statement.
+
 Each key in the dictionary is one of the possible values to be matched against in `reduce()`. The value is a function that takes no parameters, and returns a value. This returned value is then returned by `reduce()` to the calling code.
 
-### function reduce<T>(value: string, conditionals: IConditionalDictionary<T>, defaultCase?: (value: string) => T): T
+### Reduce
+
+**Signature:**
+
+```typescript
+function reduce<T>(
+  value: string,
+  conditionals: IConditionalDictionary<T>,
+  defaultCase?: (value: string) => T
+): T
+```
+
+**Description:**
 
 This function immediately reduces the `conditionals` dictionary to a single return value. If `value` is not present in the dictionary, one of two things can happen:
 
 1. If `defaultCase` is specified, then that function is invoked. The `value` parameter passed to `reduce()` is passed along to the `defaultCase` function for your use, if desired. The value returned from `defaultCase` is then returned from `reduce`
 2. If `defaultCase` is _not_ specified, then an exception is thrown
 
-### function curry<T>(conditionals: IConditionalDictionary<T>, defaultCase?: (value: string) => T): (value: string) => T
+### Curry
+
+**Signature:**
+
+```typescript
+function curry<T>(
+  conditionals: IConditionalDictionary<T>,
+  defaultCase?: (value: string) => T
+): (value: string) => T
+```
+
+**Description:**
 
 This function splits the `reduce()` call into two steps. The first creates the conditional case, with an optional default case. The parameters supplied here behave identically to their counterparts in `reduce`. A function is returned that you can then pass a value to, which then behaves like `reduce()`.
 
 This function is implemented under the hood as a pass through to `reduce`:
 
 ```typescript
-function curry<T>(conditionals: IConditionalDictionary<T>, defaultCase?: DefaultCase<T>): (value: string) => T {
-  return (value: string) => reduce<T>(value, conditionals, defaultCase);
+function curry(conditionals, defaultCase) {
+  return (value) => reduce(value, conditionals, defaultCase);
 }
 ```
 
@@ -151,7 +178,7 @@ function curry<T>(conditionals: IConditionalDictionary<T>, defaultCase?: Default
 
 MIT License
 
-Copyright (c) Bryan Hughes <bryan@nebri.us>
+Copyright (c) Bryan Hughes &lt;bryan@nebri.us&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
