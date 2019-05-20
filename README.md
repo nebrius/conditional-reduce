@@ -116,7 +116,7 @@ If you're not familiar with TypeScript syntax, there are basically three things 
 2. A `?` after the variable name and before the `:` means that the variable is optional
 3. A variable name or type followed by `<T>` means that it takes in a [generic type](https://www.typescriptlang.org/docs/handbook/generics.html) called `T`, i.e. a placeholder type that the caller fills in. `T` can be any type, but all references to `T` are of the _same_ type, whatever it may be. This type is supplied by the user when calling the function (see TypeScript examples above).
 
-## Conditional Dictionaries
+### IConditionalDictionary
 
 **Signature:**
 
@@ -132,7 +132,7 @@ Conditional dictionaries are at the core Conditional Reduce. These are analogous
 
 Each key in the dictionary is one of the possible values to be matched against in `reduce()`. The value is a function that takes no parameters, and returns a value. This returned value is then returned by `reduce()` to the calling code.
 
-### Reduce
+### reduce(value, conditionals, defaultCase)
 
 **Signature:**
 
@@ -151,7 +151,7 @@ This function immediately reduces the `conditionals` dictionary to a single retu
 1. If `defaultCase` is specified, then that function is invoked. The `value` parameter passed to `reduce()` is passed along to the `defaultCase` function for your use, if desired. The value returned from `defaultCase` is then returned from `reduce`
 2. If `defaultCase` is _not_ specified, then an exception is thrown
 
-### Curry
+### curry(conditionals, defaultCase)
 
 **Signature:**
 
