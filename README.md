@@ -118,7 +118,7 @@ If you're not familiar with TypeScript syntax, there are basically three things 
 
 ### IConditionalDictionary
 
-**Signature:**
+_Signature:_
 
 ```typescript
 interface IConditionalDictionary<T> {
@@ -126,7 +126,7 @@ interface IConditionalDictionary<T> {
 }
 ```
 
-**Description:**
+_Description:_
 
 Conditional dictionaries are at the core Conditional Reduce. These are analogous to the `case` statements in a `switch` statement.
 
@@ -134,7 +134,7 @@ Each key in the dictionary is one of the possible values to be matched against i
 
 ### reduce(value, conditionals, defaultCase)
 
-**Signature:**
+_Signature:_
 
 ```typescript
 function reduce<T>(
@@ -144,7 +144,7 @@ function reduce<T>(
 ): T
 ```
 
-**Description:**
+_Description:_
 
 This function immediately reduces the `conditionals` dictionary to a single return value. If `value` is not present in the dictionary, one of two things can happen:
 
@@ -153,7 +153,7 @@ This function immediately reduces the `conditionals` dictionary to a single retu
 
 ### curry(conditionals, defaultCase)
 
-**Signature:**
+_Signature:_
 
 ```typescript
 function curry<T>(
@@ -162,7 +162,7 @@ function curry<T>(
 ): (value: string) => T
 ```
 
-**Description:**
+_Description:_
 
 This function splits the `reduce()` call into two steps. The first creates the conditional case, with an optional default case. The parameters supplied here behave identically to their counterparts in `reduce`. A function is returned that you can then pass a value to, which then behaves like `reduce()`.
 
